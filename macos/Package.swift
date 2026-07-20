@@ -6,7 +6,7 @@ let package = Package(
     platforms: [.macOS(.v13)],
     products: [.executable(name: "CodexSkillHelper", targets: ["CodexSkillHelper"])],
     targets: [
-        .executableTarget(name: "CodexSkillHelper"),
+        .executableTarget(name: "CodexSkillHelper", resources: [.copy("Resources/StarterSkills")]),
         .testTarget(name: "CodexSkillHelperTests", dependencies: ["CodexSkillHelper"])
     ]
 )

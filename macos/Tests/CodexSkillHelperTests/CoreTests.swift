@@ -27,4 +27,10 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(prompt.contains("不要伪造" ) == false)
     }
     func testEmptyCatalog() { XCTAssertTrue(SkillCatalog.recommend([], query: "界面", mode: .ui).isEmpty) }
+    func testStarterPackIsBundled() {
+        let root = StarterSkillInstaller.bundledRoot()
+        XCTAssertNotNil(root)
+        let children = root.flatMap { try? FileManager.default.contentsOfDirectory(at: $0, includingPropertiesForKeys: nil) } ?? []
+        XCTAssertGreaterThanOrEqual(children.count, 5)
+    }
 }
