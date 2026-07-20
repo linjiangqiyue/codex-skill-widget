@@ -1,0 +1,43 @@
+﻿name: Weekly growth brief
+
+on:
+  schedule:
+    - cron: '0 1 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  build-growth-brief:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate weekly brief
+        shell: powershell
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          .\scripts\New-MarketingBrief.ps1 -OutputPath "$env:RUNNER_TEMP\growth-brief.md"
+
+      - name: Upload brief
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-growth-brief
+          path: ${{ runner.temp }}\growth-brief.md
+          retention-days: 90
+
+      - name: Create or refresh tracking issue
+        shell: powershell
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create growth-automation --color 6F42C1 --description "自动生成的推广闭环周报" --force
+          $number = gh issue list --state open --label growth-automation --json number --jq '.[0].number'
+          if ($number) {
+            gh issue edit $number --title "推广闭环：每周数据与内容草稿" --body-file "$env:RUNNER_TEMP\growth-brief.md"
+          } else {
+            gh issue create --title "推广闭环：每周数据与内容草稿" --label growth-automation --body-file "$env:RUNNER_TEMP\growth-brief.md"
+          }

@@ -1,4 +1,4 @@
-# 参与贡献
+﻿# 参与贡献
 
 谢谢你愿意帮助这个项目。第一次参与开源也完全没关系。
 
@@ -23,6 +23,7 @@
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\UsageAdapter.Tests.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\SkillCatalog.Tests.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\GitHubSkillSync.Tests.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\MarketingAutomation.Tests.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -STA -File .\Start-CodexSkillWidget.ps1 -ValidateOnly
 ```
 
