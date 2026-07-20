@@ -8,7 +8,9 @@ APP="$ROOT/dist/CodexSkillHelper.app"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp .build/release/CodexSkillHelper "$APP/Contents/MacOS/CodexSkillHelper"
-find .build/release -maxdepth 1 -type d -name '*.bundle' -exec cp -R {} "$APP/Contents/Resources/" \;
+while IFS= read -r -d '' resource_bundle; do
+  cp -R "$resource_bundle" "$APP/Contents/Resources/"
+done < <(find -L .build -type d -name '*.bundle' -print0)
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
