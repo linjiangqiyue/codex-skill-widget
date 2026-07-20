@@ -21,5 +21,5 @@ $metrics = Get-GitHubGrowthMetrics -Repository $Repository -Token $Token
 $brief = New-MarketingBrief -Config $config -Metrics $metrics
 $parent = Split-Path -Parent $OutputPath
 if ($parent) { New-Item -ItemType Directory -Force -Path $parent | Out-Null }
-Set-Content -LiteralPath $OutputPath -Value $brief -Encoding UTF8
+[IO.File]::WriteAllText($OutputPath,$brief,(New-Object Text.UTF8Encoding($false)))
 Write-Output (Resolve-Path -LiteralPath $OutputPath).Path

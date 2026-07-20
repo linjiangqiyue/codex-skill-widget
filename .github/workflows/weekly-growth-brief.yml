@@ -37,7 +37,7 @@ jobs:
           gh label create growth-automation --color 6F42C1 --force
           $number = gh issue list --state open --label growth-automation --json number --jq '.[0].number'
           if ($number) {
-            gh issue edit $number --title "推广闭环：每周数据与内容草稿" --body-file "$env:RUNNER_TEMP\growth-brief.md"
+            gh issue edit $number --title "Growth Loop: Weekly Metrics and Content Drafts" --body-file "$env:RUNNER_TEMP\growth-brief.md"
           } else {
-            gh issue create --title "推广闭环：每周数据与内容草稿" --label growth-automation --body-file "$env:RUNNER_TEMP\growth-brief.md"
+            gh issue create --title "Growth Loop: Weekly Metrics and Content Drafts" --label growth-automation --body-file "$env:RUNNER_TEMP\growth-brief.md"
           }
