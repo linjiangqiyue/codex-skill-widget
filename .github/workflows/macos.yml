@@ -34,6 +34,7 @@ jobs:
           file dist/CodexSkillHelper.app/Contents/MacOS/CodexSkillHelper | grep -q 'Mach-O 64-bit executable'
           codesign --verify --deep --strict --verbose=2 dist/CodexSkillHelper.app
           plutil -lint dist/CodexSkillHelper.app/Contents/Info.plist
+          test "$(find dist/CodexSkillHelper.app/Contents/Resources -path '*StarterSkills/*/SKILL.md' | wc -l | tr -d ' ')" = "5"
       - uses: actions/upload-artifact@v4
         with:
           name: CodexSkillHelper-native-macOS

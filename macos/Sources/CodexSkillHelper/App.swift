@@ -6,8 +6,13 @@ import AppKit
     @Published var mode: WorkMode = .managed
     @Published var query = ""
     @Published var size = 1
+    @Published var starterMessage = ""
     var recommendations: [Skill] { SkillCatalog.recommend(skills, query: query, mode: mode) }
-    func reload() { skills = SkillCatalog.load() }
+    func reload() {
+        let installed = StarterSkillInstaller.installMissing()
+        skills = SkillCatalog.load()
+        starterMessage = installed > 0 ? "已自动准备 \(installed) 项中文基础能力" : "基础能力已就绪"
+    }
     func copyPrompt() {
         let task = query.isEmpty ? "请根据我的下一条中文需求选择合适的 skills" : query
         NSPasteboard.general.clearContents()
@@ -62,7 +67,7 @@ struct WidgetView: View {
                     }
                 }
             }
-            HStack { Text(state.recommendations.isEmpty ? "没有匹配项" : "从 \(state.skills.count) 个中显示 \(state.recommendations.count) 个").font(.caption).foregroundStyle(.secondary); Spacer(); Button("复制提示词") { state.copyPrompt() }.buttonStyle(.borderedProminent) }
+            HStack { Text(state.starterMessage).font(.caption).foregroundStyle(.secondary); Spacer(); Button("复制提示词") { state.copyPrompt() }.buttonStyle(.borderedProminent) }
         }
         .padding(16).frame(width: width, height: height)
         .background(.ultraThinMaterial)

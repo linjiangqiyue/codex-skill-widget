@@ -92,6 +92,29 @@ enum SkillCatalog {
     }
 }
 
+enum StarterSkillInstaller {
+    static let markerPrefix = "codex-helper-"
+
+    static func bundledRoot(bundle: Bundle = .module) -> URL? {
+        bundle.url(forResource: "StarterSkills", withExtension: nil)
+    }
+
+    @discardableResult
+    static func installMissing(home: URL = FileManager.default.homeDirectoryForCurrentUser, bundle: Bundle = .module) -> Int {
+        guard let sourceRoot = bundledRoot(bundle: bundle) else { return 0 }
+        let destinationRoot = home.appendingPathComponent(".codex/skills", isDirectory: true)
+        try? FileManager.default.createDirectory(at: destinationRoot, withIntermediateDirectories: true)
+        let sources = (try? FileManager.default.contentsOfDirectory(at: sourceRoot, includingPropertiesForKeys: [.isDirectoryKey])) ?? []
+        var installed = 0
+        for source in sources where source.lastPathComponent.hasPrefix(markerPrefix) {
+            let destination = destinationRoot.appendingPathComponent(source.lastPathComponent, isDirectory: true)
+            guard !FileManager.default.fileExists(atPath: destination.path) else { continue }
+            do { try FileManager.default.copyItem(at: source, to: destination); installed += 1 } catch { continue }
+        }
+        return installed
+    }
+}
+
 enum PromptComposer {
     static func make(task: String, mode: WorkMode, skills: [Skill]) -> String {
         let names = skills.isEmpty ? "请自动选择合适的 skills" : skills.map(\.name).joined(separator: "、")
