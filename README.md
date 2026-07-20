@@ -12,11 +12,10 @@
 |---|---|---|
 | Windows 本地完整版 | 需要本地 Skills、额度和 GitHub 隔离审核 | 前往 [Releases](https://github.com/linjiangqiyue/codex-skill-widget/releases/latest) 下载 Windows ZIP，解压后双击 `双击启动-Codex助手.bat` |
 | macOS 原生版（Beta） | 需要菜单栏、悬浮窗口和本机 Skills 扫描 | 前往 [Releases](https://github.com/linjiangqiyue/codex-skill-widget/releases/latest) 下载 `CodexSkillHelper-macOS-*.zip` |
-| 在线体验版 | 暂时不安装，只体验任务整理 | [直接打开网页版](https://linjiangqiyue.github.io/codex-skill-widget/) |
 
 [观看 30 秒真实界面演示](docs/assets/codex-skill-helper-demo-30s.mp4)
 
-> macOS 原生版由 GitHub 的 macOS 机器编译和自动测试，目前采用临时签名、尚未经过 Apple 公证。首次打开若被系统拦截，请在 Finder 中右键应用并选择“打开”。在线体验版不会读取本机额度和 `~/.codex/skills`。
+> macOS 原生版由 GitHub 的 macOS 机器编译和自动测试，目前采用临时签名、尚未经过 Apple 公证。首次打开若被系统拦截，请在 Finder 中右键应用并选择“打开”。
 
 ## 为什么做它
 
@@ -43,12 +42,6 @@
 - 从 GitHub 搜索候选 Skill，先隔离和静态审核，再决定是否安装；
 - 小、标准、大三档窗口，自动限制在屏幕工作区内；
 - 支持置顶、拖动、折叠和本地设置保存。
-
-## 推广闭环
-
-仓库内置了一套独立的[推广自动化](marketing/README.md)：每周读取 GitHub 的真实访问、克隆、下载和反馈信号，轮换一个用户痛点，并生成知乎、B 站、小红书、V2EX/掘金的差异化草稿与追踪链接。
-
-它不会自动登录或群发社交平台。重复的数据整理和草稿准备交给系统，最终内容仍由作者确认，避免垃圾推广与事实失真。
 
 ## 运行要求
 
@@ -83,7 +76,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -STA -File .\Start-CodexSkillW
 
 这个项目首先解决真实的个人痛点，再逐步验证是否也能帮助更多普通用户。未来可能探索真实任务阶段、线程汇总、日报周报和原型差异检查，但不会为了功能数量把小组件变成沉重的项目管理平台。
 
-更完整的故事见 [一个普通人的第一份开源答卷](docs/PRODUCT_VISION.md)。欢迎提出问题、改进中文解释、补充测试，或者只是讲讲你也曾遇到的那个“知道不对，却说不清楚”的时刻。
+欢迎提出问题、改进中文解释或补充测试。
 
 ## 作者
 
