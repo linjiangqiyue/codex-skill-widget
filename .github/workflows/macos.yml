@@ -19,7 +19,13 @@ jobs:
         working-directory: macos
         run: swift test
       - name: Resolve version
-        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+          else
+            echo "VERSION=0.2.0-beta" >> "$GITHUB_ENV"
+          fi
       - name: Build app bundle
         run: bash scripts/build-macos-app.sh "${VERSION}"
       - name: Verify native bundle
