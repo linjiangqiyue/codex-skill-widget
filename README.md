@@ -6,6 +6,17 @@
 
 ![Codex Skill 中文助手](docs/assets/widget-standard.png)
 
+## 下载与体验
+
+| 版本 | 适合谁 | 使用方式 |
+|---|---|---|
+| Windows 本地完整版 | 需要本地 Skills、额度和 GitHub 隔离审核 | 前往 [Releases](https://github.com/linjiangqiyue/codex-skill-widget/releases/latest) 下载 Windows ZIP，解压后双击 `双击启动-Codex助手.bat` |
+| Mac / 网页轻版 | 想立即使用中文任务整理和提示词生成 | [直接打开网页版](https://linjiangqiyue.github.io/codex-skill-widget/)，或从 Release 下载 Mac 网页入口 |
+
+[观看 30 秒真实界面演示](docs/assets/codex-skill-helper-demo-30s.mp4)
+
+> Mac 网页轻版不会读取本机额度和 `~/.codex/skills`。原生 Mac 菜单栏版仍需要在真实 Mac 上完成编译、签名和兼容性测试。
+
 ## 为什么做它
 
 很多人有行业经验、产品想法和审美判断，却没有系统的开发或设计训练。使用 Codex 修改开源项目时，常遇到这些问题：
@@ -48,6 +59,8 @@
 ```text
 Run-CodexSkillWidget.bat
 ```
+
+Release 下载包中可以直接双击中文文件名 `双击启动-Codex助手.bat`。
 
 也可以先验证本地环境：
 

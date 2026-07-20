@@ -24,6 +24,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\UsageAdapter.Tes
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\SkillCatalog.Tests.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\GitHubSkillSync.Tests.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\MarketingAutomation.Tests.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\ReleasePackage.Tests.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -STA -File .\Start-CodexSkillWidget.ps1 -ValidateOnly
 ```
 

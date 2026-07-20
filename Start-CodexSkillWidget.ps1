@@ -4,7 +4,8 @@
     [switch]$QaMode,
     [string]$CapturePath,
     [ValidateSet('托管任务','产品判断','UI 检查','Skills')][string]$CaptureMode,
-    [ValidateSet('小','标准','大')][string]$CaptureSize
+    [ValidateSet('小','标准','大')][string]$CaptureSize,
+    [string]$CaptureQuery
 )
 
 $ErrorActionPreference = 'Stop'
@@ -15,6 +16,7 @@ if ([Threading.Thread]::CurrentThread.GetApartmentState() -ne 'STA') {
     if ($CapturePath) { $arguments += @('-CapturePath',('"{0}"' -f $CapturePath)) }
     if ($CaptureMode) { $arguments += @('-CaptureMode',('"{0}"' -f $CaptureMode)) }
     if ($CaptureSize) { $arguments += @('-CaptureSize',('"{0}"' -f $CaptureSize)) }
+    if ($CaptureQuery) { $arguments += @('-CaptureQuery',('"{0}"' -f $CaptureQuery)) }
     Start-Process powershell.exe -ArgumentList ($arguments -join ' ')
     return
 }
@@ -361,6 +363,7 @@ $window.Add_Closing({
 })
 
 if($CaptureMode){$script:workMode=$CaptureMode;$captureModeButton=$modeButtons|Where-Object {$_.Tag -eq $CaptureMode}|Select-Object -First 1;if($captureModeButton){$captureModeButton.IsChecked=$true}}
+if($CaptureQuery){$queryBox.Text=$CaptureQuery}
 Update-Recommendations
 Update-UsageDisplay
 $usageTimer=New-Object Windows.Threading.DispatcherTimer
