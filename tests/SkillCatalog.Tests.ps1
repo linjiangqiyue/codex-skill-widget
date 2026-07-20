@@ -1,7 +1,23 @@
 ﻿$ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot '..\src\SkillCatalog.psm1') -Force
 
-$catalog = @(Get-CodexSkillCatalog)
+$fixtureRoot=Join-Path $env:TEMP ('codex-skill-catalog-test-'+[guid]::NewGuid().ToString('N'))
+function New-TestSkill([string]$Root,[string]$Name,[string]$Description){
+    $dir=Join-Path $Root $Name;New-Item -ItemType Directory -Force -Path $dir|Out-Null
+    $body="---`nname: $Name`ndescription: $Description`n---`n"
+    Set-Content -LiteralPath (Join-Path $dir 'SKILL.md') -Value $body -Encoding UTF8
+}
+New-Item -ItemType Directory -Force -Path (Join-Path $fixtureRoot 'skills')|Out-Null
+New-TestSkill (Join-Path $fixtureRoot 'skills') 'problem-framing-canvas' 'Frame product problems and user goals clearly.'
+New-TestSkill (Join-Path $fixtureRoot 'skills') 'craft-spec' 'Turn messy product ideas into a structured PRD.'
+New-TestSkill (Join-Path $fixtureRoot 'skills') 'architecture-patterns' 'Apply software architecture patterns to a codebase.'
+New-TestSkill (Join-Path $fixtureRoot 'skills') 'systematic-debugging' 'Debug and test software failures systematically.'
+New-TestSkill (Join-Path $fixtureRoot 'skills') 'verification-before-completion' 'Verify evidence before claiming work is complete.'
+$pdRoot=Join-Path $fixtureRoot 'plugins\cache\openai-curated-remote\product-design\0.1.0\skills'
+New-TestSkill $pdRoot 'audit' 'Audit product UI and UX from real screenshots.'
+
+try {
+$catalog = @(Get-CodexSkillCatalog -CodexHome $fixtureRoot)
 if (@($catalog | Where-Object {[string]::IsNullOrWhiteSpace($_.ChineseSummary)}).Count) { throw '每个 Skill 都必须有中文用途说明' }
 $problemFraming=$catalog|Where-Object Name -eq 'problem-framing-canvas'|Select-Object -First 1
 $craftSpec=$catalog|Where-Object Name -eq 'craft-spec'|Select-Object -First 1
@@ -37,3 +53,9 @@ $uiPrompt=New-CodexTaskPrompt -Task '检查界面' -Skills @() -Mode 'UI 检查'
 if($uiPrompt -notmatch '截图' -or $uiPrompt -notmatch '裁切'){throw 'UI 检查提示词缺少视觉证据要求'}
 
 Write-Output 'PASS: Skill category behavior tests'
+} finally {
+$tempRoot=[IO.Path]::GetFullPath([IO.Path]::GetTempPath());$resolved=[IO.Path]::GetFullPath($fixtureRoot)
+if($resolved.StartsWith($tempRoot,[StringComparison]::OrdinalIgnoreCase) -and ([IO.Path]::GetFileName($resolved) -like 'codex-skill-catalog-test-*') -and (Test-Path -LiteralPath $resolved)){
+    Remove-Item -LiteralPath $resolved -Recurse -Force
+}
+}

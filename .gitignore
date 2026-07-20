@@ -5,6 +5,7 @@ run-error.log
 run-output.log
 github-quarantine/
 marketing-output/
+dist/
 
 # Local QA and temporary captures
 audit/

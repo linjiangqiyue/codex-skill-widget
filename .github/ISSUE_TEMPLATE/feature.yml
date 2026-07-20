@@ -1,0 +1,23 @@
+name: 功能建议
+description: 描述真实使用问题，而不只是一个功能名称
+title: "[想法] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你当时想完成什么
+      placeholder: 请描述具体场景、遇到的困难和现在怎样处理
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 什么结果会真正帮助你
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 平台
+      options: [Windows, Mac / 网页, 两者都需要]

@@ -4,7 +4,8 @@
     [switch]$QaMode,
     [string]$CapturePath,
     [ValidateSet('托管任务','产品判断','UI 检查','Skills')][string]$CaptureMode,
-    [ValidateSet('小','标准','大')][string]$CaptureSize
+    [ValidateSet('小','标准','大')][string]$CaptureSize,
+    [string]$CaptureQuery
 )
 
 $ErrorActionPreference = 'Stop'
@@ -15,6 +16,7 @@ if ([Threading.Thread]::CurrentThread.GetApartmentState() -ne 'STA') {
     if ($CapturePath) { $arguments += @('-CapturePath',('"{0}"' -f $CapturePath)) }
     if ($CaptureMode) { $arguments += @('-CaptureMode',('"{0}"' -f $CaptureMode)) }
     if ($CaptureSize) { $arguments += @('-CaptureSize',('"{0}"' -f $CaptureSize)) }
+    if ($CaptureQuery) { $arguments += @('-CaptureQuery',('"{0}"' -f $CaptureQuery)) }
     Start-Process powershell.exe -ArgumentList ($arguments -join ' ')
     return
 }
@@ -40,8 +42,8 @@ $settings = if (Test-Path -LiteralPath $settingsPath) {
 } else { [pscustomobject]@{} }
 
 if ($ValidateOnly) {
-    $sample = @(Find-CodexSkills -Catalog $script:catalog -Query '按照原型修改网页并测试' -Top 6)
-    [pscustomobject]@{ Status='OK'; SkillCount=$script:catalog.Count; SampleRecommendations=@($sample.Name) } | ConvertTo-Json -Depth 4
+    $sample = if ($script:catalog.Count) { @(Find-CodexSkills -Catalog $script:catalog -Query '按照原型修改网页并测试' -Top 6) } else { @() }
+    [pscustomobject]@{ Status='OK'; SkillCount=$script:catalog.Count; SampleRecommendations=@($sample | ForEach-Object Name) } | ConvertTo-Json -Depth 4
     return
 }
 
@@ -235,7 +237,9 @@ function Update-Recommendations {
     $task = $queryBox.Text.Trim()
     $frequent = @(Get-FrequentQueryTerms -HistoryPath $historyPath -Top 4 | ForEach-Object Term)
     $enrichedTask = (@($task) + $frequent -join ' ')
-    if ($script:workMode -eq 'Skills') {
+    if (-not $script:catalog.Count) {
+        $script:currentSkills=@()
+    } elseif ($script:workMode -eq 'Skills') {
         $script:currentSkills = if ([string]::IsNullOrWhiteSpace($task)) {
             @($script:catalog | Sort-Object Category,Name)
         } else {
@@ -361,6 +365,7 @@ $window.Add_Closing({
 })
 
 if($CaptureMode){$script:workMode=$CaptureMode;$captureModeButton=$modeButtons|Where-Object {$_.Tag -eq $CaptureMode}|Select-Object -First 1;if($captureModeButton){$captureModeButton.IsChecked=$true}}
+if($CaptureQuery){$queryBox.Text=$CaptureQuery}
 Update-Recommendations
 Update-UsageDisplay
 $usageTimer=New-Object Windows.Threading.DispatcherTimer

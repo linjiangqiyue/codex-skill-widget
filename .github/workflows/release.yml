@@ -1,0 +1,43 @@
+name: Build release packages
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version without v prefix
+        required: true
+        default: 0.1.0
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve version
+        shell: powershell
+        run: |
+          $version = if ('${{ github.event_name }}' -eq 'workflow_dispatch') { '${{ inputs.version }}' } else { '${{ github.ref_name }}'.TrimStart('v') }
+          "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+      - name: Test and package
+        shell: powershell
+        run: |
+          .\tests\ReleasePackage.Tests.ps1
+          .\scripts\Build-Release.ps1 -Version $env:VERSION
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-packages
+          path: dist\*.zip
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            dist/*.zip
+            docs/assets/codex-skill-helper-demo-30s.mp4
