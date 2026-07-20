@@ -1,0 +1,22 @@
+# Local runtime state
+settings.json
+query-history.json
+run-error.log
+run-output.log
+github-quarantine/
+
+# Local QA and temporary captures
+audit/
+/widget-*.png
+/merged-*.png
+/final-preview.png
+/design-qa-comparison.png
+/design-qa.md
+
+# PowerShell / editor / OS noise
+*.tmp
+*.bak
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
