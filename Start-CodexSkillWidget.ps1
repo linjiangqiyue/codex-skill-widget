@@ -42,8 +42,8 @@ $settings = if (Test-Path -LiteralPath $settingsPath) {
 } else { [pscustomobject]@{} }
 
 if ($ValidateOnly) {
-    $sample = @(Find-CodexSkills -Catalog $script:catalog -Query '按照原型修改网页并测试' -Top 6)
-    [pscustomobject]@{ Status='OK'; SkillCount=$script:catalog.Count; SampleRecommendations=@($sample.Name) } | ConvertTo-Json -Depth 4
+    $sample = if ($script:catalog.Count) { @(Find-CodexSkills -Catalog $script:catalog -Query '按照原型修改网页并测试' -Top 6) } else { @() }
+    [pscustomobject]@{ Status='OK'; SkillCount=$script:catalog.Count; SampleRecommendations=@($sample | ForEach-Object Name) } | ConvertTo-Json -Depth 4
     return
 }
 
@@ -237,7 +237,9 @@ function Update-Recommendations {
     $task = $queryBox.Text.Trim()
     $frequent = @(Get-FrequentQueryTerms -HistoryPath $historyPath -Top 4 | ForEach-Object Term)
     $enrichedTask = (@($task) + $frequent -join ' ')
-    if ($script:workMode -eq 'Skills') {
+    if (-not $script:catalog.Count) {
+        $script:currentSkills=@()
+    } elseif ($script:workMode -eq 'Skills') {
         $script:currentSkills = if ([string]::IsNullOrWhiteSpace($task)) {
             @($script:catalog | Sort-Object Category,Name)
         } else {
