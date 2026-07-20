@@ -34,7 +34,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh label create growth-automation --color 6F42C1 --description "自动生成的推广闭环周报" --force
+          gh label create growth-automation --color 6F42C1 --force
           $number = gh issue list --state open --label growth-automation --json number --jq '.[0].number'
           if ($number) {
             gh issue edit $number --title "推广闭环：每周数据与内容草稿" --body-file "$env:RUNNER_TEMP\growth-brief.md"
