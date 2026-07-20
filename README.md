@@ -2,7 +2,7 @@
 
 > 不是每一个有想法的人，都应该先成为程序员，才有资格把想法做出来。
 
-一个面向普通中文用户的 Windows 桌面小组件：把“我感觉不对，但不知道该怎么说”转换成清晰、可执行、可验收的 Codex 提示词。
+一个面向普通中文用户的 Windows 与 macOS 原生桌面助手：把“我感觉不对，但不知道该怎么说”转换成清晰、可执行、可验收的 Codex 提示词。
 
 ![Codex Skill 中文助手](docs/assets/widget-standard.png)
 
@@ -11,11 +11,12 @@
 | 版本 | 适合谁 | 使用方式 |
 |---|---|---|
 | Windows 本地完整版 | 需要本地 Skills、额度和 GitHub 隔离审核 | 前往 [Releases](https://github.com/linjiangqiyue/codex-skill-widget/releases/latest) 下载 Windows ZIP，解压后双击 `双击启动-Codex助手.bat` |
-| Mac / 网页轻版 | 想立即使用中文任务整理和提示词生成 | [直接打开网页版](https://linjiangqiyue.github.io/codex-skill-widget/)，或从 Release 下载 Mac 网页入口 |
+| macOS 原生版（Beta） | 需要菜单栏、悬浮窗口和本机 Skills 扫描 | 前往 [Releases](https://github.com/linjiangqiyue/codex-skill-widget/releases/latest) 下载 `CodexSkillHelper-macOS-*.zip` |
+| 在线体验版 | 暂时不安装，只体验任务整理 | [直接打开网页版](https://linjiangqiyue.github.io/codex-skill-widget/) |
 
 [观看 30 秒真实界面演示](docs/assets/codex-skill-helper-demo-30s.mp4)
 
-> Mac 网页轻版不会读取本机额度和 `~/.codex/skills`。原生 Mac 菜单栏版仍需要在真实 Mac 上完成编译、签名和兼容性测试。
+> macOS 原生版由 GitHub 的 macOS 机器编译和自动测试，目前采用临时签名、尚未经过 Apple 公证。首次打开若被系统拦截，请在 Finder 中右键应用并选择“打开”。在线体验版不会读取本机额度和 `~/.codex/skills`。
 
 ## 为什么做它
 
@@ -53,6 +54,8 @@
 - Windows 10/11
 - Windows PowerShell 5.1
 - 已安装并使用过 Codex Desktop / Codex CLI
+
+macOS 原生版要求 macOS 13 或更高版本。解压 ZIP 后将 App 拖入“应用程序”；由于当前没有 Apple Developer ID 公证，首次启动需右键选择“打开”。
 
 下载项目后，双击：
 

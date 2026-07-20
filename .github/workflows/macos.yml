@@ -1,0 +1,39 @@
+name: Build native macOS app
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  native-macos:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run native unit tests
+        working-directory: macos
+        run: swift test
+      - name: Resolve version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+      - name: Build app bundle
+        run: bash scripts/build-macos-app.sh "${VERSION}"
+      - name: Verify native bundle
+        run: |
+          test -x dist/CodexSkillHelper.app/Contents/MacOS/CodexSkillHelper
+          file dist/CodexSkillHelper.app/Contents/MacOS/CodexSkillHelper | grep -q 'Mach-O 64-bit executable'
+          codesign --verify --deep --strict --verbose=2 dist/CodexSkillHelper.app
+          plutil -lint dist/CodexSkillHelper.app/Contents/Info.plist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CodexSkillHelper-native-macOS
+          path: dist/CodexSkillHelper-macOS-*.zip
+      - name: Publish native Mac asset
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${GITHUB_REF_NAME}" dist/CodexSkillHelper-macOS-*.zip --clobber

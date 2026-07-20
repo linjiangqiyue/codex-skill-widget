@@ -25,17 +25,8 @@ foreach($file in @('SkillCatalog.psm1','UsageAdapter.psm1','GitHubSkillSync.psm1
 $windowsZip=Join-Path $output "CodexSkillHelper-Windows-v$Version.zip"
 Compress-Archive -Path (Join-Path $windowsDir '*') -DestinationPath $windowsZip -CompressionLevel Optimal
 
-$macDir=Join-Path $output "CodexSkillHelper-macOS-Web-v$Version"
-New-Item -ItemType Directory -Force -Path $macDir|Out-Null
-Copy-Item -LiteralPath (Join-Path $projectRoot 'macos-web\打开-Codex助手.webloc') -Destination $macDir
-Copy-Item -LiteralPath (Join-Path $projectRoot 'macos-web\README-MAC.md') -Destination $macDir
-Copy-Item -LiteralPath (Join-Path $projectRoot 'LICENSE') -Destination $macDir
-$macZip=Join-Path $output "CodexSkillHelper-macOS-Web-v$Version.zip"
-Compress-Archive -Path (Join-Path $macDir '*') -DestinationPath $macZip -CompressionLevel Optimal
-
 $result=@(
-    [pscustomobject]@{Platform='Windows';Path=$windowsZip;Bytes=(Get-Item $windowsZip).Length},
-    [pscustomobject]@{Platform='macOS Web';Path=$macZip;Bytes=(Get-Item $macZip).Length}
+    [pscustomobject]@{Platform='Windows';Path=$windowsZip;Bytes=(Get-Item $windowsZip).Length}
 )
 $result|Format-Table -AutoSize
 $result
