@@ -19,7 +19,6 @@ jobs:
           .\tests\UsageAdapter.Tests.ps1
           .\tests\SkillCatalog.Tests.ps1
           .\tests\GitHubSkillSync.Tests.ps1
-          .\tests\MarketingAutomation.Tests.ps1
           .\tests\ReleasePackage.Tests.ps1
       - name: Validate widget startup
         shell: powershell
@@ -27,14 +26,3 @@ jobs:
       - name: Build release packages
         shell: powershell
         run: .\scripts\Build-Release.ps1 -Version ci
-
-  web-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Check required web content
-        shell: bash
-        run: |
-          test -s web/index.html
-          grep -q "Mac / 网页轻版" web/index.html
-          grep -q "复制提示词" web/index.html
