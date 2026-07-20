@@ -1,9 +1,10 @@
-# Local runtime state
+﻿# Local runtime state
 settings.json
 query-history.json
 run-error.log
 run-output.log
 github-quarantine/
+marketing-output/
 
 # Local QA and temporary captures
 audit/

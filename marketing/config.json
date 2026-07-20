@@ -1,0 +1,39 @@
+﻿{
+  "repository": "linjiangqiyue/codex-skill-widget",
+  "repositoryUrl": "https://github.com/linjiangqiyue/codex-skill-widget",
+  "author": "墨老板",
+  "painPoints": [
+    {
+      "slug": "prototype-drift",
+      "title": "Codex 没有按照原型做，但我不知道怎么告诉它哪里错了，怎么办？",
+      "searchQuery": "Codex 不按照设计稿修改怎么办",
+      "hook": "我知道 Codex 做偏了，但我说不出它到底偏在哪里。",
+      "videoTitle": "Codex 总是不按原型做？先把这三件事说清楚",
+      "socialTitle": "我知道 AI 做错了，却不知道怎么让它改"
+    },
+    {
+      "slug": "ui-language",
+      "title": "为什么 Codex 做出来的 UI 总感觉不对？",
+      "searchQuery": "Codex UI 做得不对怎么办",
+      "hook": "我肉眼能看出页面不舒服，却不知道对齐、间距和裁切该怎样专业地表达。",
+      "videoTitle": "不会说 UI 专业词，怎么让 Codex 把页面改对？",
+      "socialTitle": "看得出页面很怪，但我不会那些设计术语"
+    },
+    {
+      "slug": "managed-task",
+      "title": "不会写代码的人，应该怎样把任务托管给 Codex？",
+      "searchQuery": "Codex 怎么托管任务",
+      "hook": "我想把任务放心交出去，却不知道提示词里必须写哪些边界。",
+      "videoTitle": "把任务交给 Codex 前，一定要写清楚这几个边界",
+      "socialTitle": "不会代码，我是怎么把任务交给 Codex 的"
+    },
+    {
+      "slug": "skills-in-chinese",
+      "title": "Codex Skills 有几百个，英文不好应该怎么选？",
+      "searchQuery": "Codex Skills 中文说明",
+      "hook": "电脑里有几百个 Skills，但英文名称让我根本不知道该选谁。",
+      "videoTitle": "295 个 Codex Skills，到底都是干什么的？",
+      "socialTitle": "英文不好，295 个 Codex Skills 我怎么看？"
+    }
+  ]
+}
