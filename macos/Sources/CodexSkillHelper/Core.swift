@@ -67,6 +67,7 @@ enum SkillCatalog {
             "verification-before-completion": "完成前核对证据，防止未经验证就宣布完成",
             "product-design:audit": "依据真实截图检查产品流程、UI 细节和可访问性",
             "product-design:image-to-code": "按照选定截图或设计稿还原可运行界面",
+            "codex-helper-prototype-fidelity": "严格按原型实现，并通过同尺寸截图对比修复视觉偏差",
             "design-system": "统一颜色、字体、间距和组件状态等设计规范",
             "skill-installer": "从可信目录或 GitHub 安装 Codex Skills"
         ]
@@ -78,7 +79,7 @@ enum SkillCatalog {
     static let profiles: [WorkMode: [String]] = [
         .managed: ["problem-framing-canvas","craft-spec","agent-orchestration-advisor","code-review-excellence","verification-before-completion"],
         .product: ["problem-framing-canvas","craft-spec","prd","create-user-stories","prioritization-advisor","verification-before-completion"],
-        .ui: ["product-design:audit","design-system","impeccable","code-review-excellence","e2e-testing-patterns","verification-before-completion"],
+        .ui: ["codex-helper-prototype-fidelity","product-design:audit","design-system","impeccable","e2e-testing-patterns","verification-before-completion"],
         .skills: ["skill-installer","agent-orchestration-advisor","verification-before-completion"]
     ]
 

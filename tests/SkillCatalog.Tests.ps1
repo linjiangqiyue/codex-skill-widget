@@ -13,6 +13,7 @@ New-TestSkill (Join-Path $fixtureRoot 'skills') 'craft-spec' 'Turn messy product
 New-TestSkill (Join-Path $fixtureRoot 'skills') 'architecture-patterns' 'Apply software architecture patterns to a codebase.'
 New-TestSkill (Join-Path $fixtureRoot 'skills') 'systematic-debugging' 'Debug and test software failures systematically.'
 New-TestSkill (Join-Path $fixtureRoot 'skills') 'verification-before-completion' 'Verify evidence before claiming work is complete.'
+New-TestSkill (Join-Path $fixtureRoot 'skills') 'codex-helper-prototype-fidelity' '严格按照 Figma、设计稿或截图实现界面，并完成同尺寸截图对比和视觉验收。'
 $pdRoot=Join-Path $fixtureRoot 'plugins\cache\openai-curated-remote\product-design\0.1.0\skills'
 New-TestSkill $pdRoot 'audit' 'Audit product UI and UX from real screenshots.'
 
@@ -38,8 +39,13 @@ if ($debugging.Category -ne '测试调试') {
 }
 
 $uiAudit = @(Find-CodexSkills -Catalog $catalog -Query '看看细节' -Mode 'UI 检查' -Top 6)
-if ($uiAudit.Count -eq 0 -or $uiAudit[0].Name -ne 'product-design:audit') {
-    throw "UI 检查模式应优先 product-design:audit，实际为 $(@($uiAudit.Name) -join ', ')"
+if ($uiAudit.Count -eq 0 -or $uiAudit[0].Name -ne 'codex-helper-prototype-fidelity') {
+    throw "UI 检查模式应优先严格还原原型，实际为 $(@($uiAudit.Name) -join ', ')"
+}
+
+$prototypeTask = @(Find-CodexSkills -Catalog $catalog -Query '严格按照原型做，检查按钮大小和文字溢出' -Top 6)
+if ($prototypeTask.Count -eq 0 -or $prototypeTask[0].Name -ne 'codex-helper-prototype-fidelity') {
+    throw "原型还原任务应优先严格还原原型，实际为 $(@($prototypeTask.Name) -join ', ')"
 }
 
 $featureDesign = @(Find-CodexSkills -Catalog $catalog -Query '增加功能' -Mode '产品判断' -Top 6)

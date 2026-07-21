@@ -1,0 +1,4 @@
+interface:
+  display_name: "严格还原原型"
+  short_description: "严格读取原型尺寸并完成实现、截图对比、视觉问题修复与最终验收"
+  default_prompt: "使用 $codex-helper-prototype-fidelity 严格按照我提供的原型实现界面，并在交付前完成同尺寸截图对比。"
