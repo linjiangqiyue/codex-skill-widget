@@ -122,7 +122,7 @@ function Get-CodexSkillCatalog {
 
 function Get-IntentProfiles {
     @(
-        @{ Category='界面设计'; Triggers=@('原型','设计稿','截图','界面','网页','页面','app','应用','ui','ux','还原','前端'); Skills=@('product-design:image-to-code','image-to-code','design-system','redesign-existing-projects','ui-ux-pro-max','verification-before-completion') },
+        @{ Category='界面设计'; Triggers=@('原型','设计稿','截图','界面','网页','页面','app','应用','ui','ux','还原','前端','像素级','按钮','溢出','裁切'); Skills=@('codex-helper-prototype-fidelity','product-design:image-to-code','image-to-code','design-system','product-design:audit','verification-before-completion') },
         @{ Category='产品经理'; Triggers=@('需求','产品','prd','功能','用户故事','路线图','竞品','优先级','原型流程'); Skills=@('prd','craft-spec','user-story','epic-breakdown-advisor','roadmap-planning','prioritization-advisor') },
         @{ Category='架构开发'; Triggers=@('源码','代码','架构','重构','接口','数据库','迁移','模块','依赖','后端'); Skills=@('architecture-patterns','writing-plans','api-design-principles','architecture-decision-records','database-migration','monorepo-management') },
         @{ Category='测试调试'; Triggers=@('bug','报错','错误','修复','调试','测试','回归','验收','审查'); Skills=@('systematic-debugging','test-driven-development','code-review-excellence','e2e-testing-patterns','verification-before-completion') },
@@ -134,7 +134,7 @@ function Get-WorkModeProfiles {
     @{
         '托管任务'=@('problem-framing-canvas','craft-spec','agent-orchestration-advisor','code-review-excellence','verification-before-completion')
         '产品判断'=@('problem-framing-canvas','craft-spec','prd','create-user-stories','prioritization-advisor','verification-before-completion')
-        'UI 检查'=@('product-design:audit','design-system','impeccable','code-review-excellence','e2e-testing-patterns','verification-before-completion')
+        'UI 检查'=@('codex-helper-prototype-fidelity','product-design:audit','design-system','impeccable','e2e-testing-patterns','verification-before-completion')
         'Skills'=@('skill-installer','agent-orchestration-advisor','verification-before-completion')
     }
 }

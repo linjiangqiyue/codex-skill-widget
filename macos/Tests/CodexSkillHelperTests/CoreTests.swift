@@ -16,6 +16,10 @@ final class CoreTests: XCTestCase {
         let catalog = ["verification-before-completion","craft-spec","problem-framing-canvas"].map { Skill(name: $0, description: "tool", path: $0) }
         XCTAssertEqual(SkillCatalog.recommend(catalog, query: "", mode: .managed).map(\.name), ["problem-framing-canvas","craft-spec","verification-before-completion"])
     }
+    func testPrototypeFidelityLeadsUIMode() {
+        let catalog = ["product-design:audit","codex-helper-prototype-fidelity","design-system"].map { Skill(name: $0, description: "UI design tool", path: $0) }
+        XCTAssertEqual(SkillCatalog.recommend(catalog, query: "按原型检查按钮", mode: .ui).first?.name, "codex-helper-prototype-fidelity")
+    }
     func testChineseSearchAndAllSkillsMode() {
         let skill = Skill(name: "prd", description: "product", path: "")
         XCTAssertEqual(SkillCatalog.recommend([skill], query: "产品", mode: .skills).count, 1)
@@ -31,6 +35,6 @@ final class CoreTests: XCTestCase {
         let root = StarterSkillInstaller.bundledRoot()
         XCTAssertNotNil(root)
         let children = root.flatMap { try? FileManager.default.contentsOfDirectory(at: $0, includingPropertiesForKeys: nil) } ?? []
-        XCTAssertGreaterThanOrEqual(children.count, 5)
+        XCTAssertGreaterThanOrEqual(children.count, 6)
     }
 }
